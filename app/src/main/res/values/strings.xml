@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Location Tracker</string>
+    <string name="save_this_spot">Remember This Spot</string>
+    <string name="saved_places_title">My Saved Spots</string>
+    <string name="my_saved_spots">My Saved Spots</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
