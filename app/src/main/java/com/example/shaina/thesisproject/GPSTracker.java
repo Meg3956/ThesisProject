@@ -1,17 +1,21 @@
 package com.example.shaina.thesisproject;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-//import android.location.LocationProvider;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 /**
@@ -20,28 +24,20 @@ import android.util.Log;
 
 public class GPSTracker extends Service implements LocationListener {
 
-     private final Context mContext;
-
+    // The minimum distance to change Updates in meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    // The minimum time between updates in milliseconds
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
+    private final Context mContext;
+    // Declaring a Location Manager
+    protected LocationManager locationManager;
     boolean isGPSEnabled = false; //flag for GPS status
-
     boolean isNetworkEnabled = false; //flag for network status
-
     boolean canGetLocation = false;
-
     Location location;
     double latitude;
     double longitude;
-
-    // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
-
-    // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-
-    // Declaring a Location Manager
-    protected LocationManager locationManager;
-
-    //private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
 
     public GPSTracker(Context context) {
         this.mContext = context;
@@ -65,6 +61,7 @@ public class GPSTracker extends Service implements LocationListener {
 
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
+                    //DO I NEED TO CHECK PERMISSIONS HERE TOO?
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                     Log.d("Network", "Network");
@@ -80,34 +77,16 @@ public class GPSTracker extends Service implements LocationListener {
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
-                        /*//check permissions
+
+                        //check permissions
                         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                                 != PackageManager.PERMISSION_GRANTED &&
                                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                                         != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(this, new String[]
-                                            {Manifest.permission.ACCESS_FINE_LOCATION},
-                                    MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
-
-                            @Override
-                            public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-                                switch (requestCode) {
-                                    case MY_PERMISSIONS_REQUEST_ACCESS_LOCATION: {
-                                        if (grantResults.length > 0 //If request is cancelled, the result arrays are empty
-                                                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                                            //OK, NOW WHAT DO I DO WITH THIS PERMISSION???
-                                        } else {
-                                            //IF PERMISSION IS DENIED, WHAT SHOULD I DO???
-                                        }
-                                    }
-                                    case //SHOULD I PUT HERE THE ACCESS NETWORK PERMISSIONS CASE?
-                                }
-                            }
-
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                            return TODO;
-                        }*/
+                            ActivityCompat.requestPermissions((Activity) mContext, new String[]
+                                    {Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
+                        }
+                        
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                         Log.d("GPS Enabled", "GPS Enabled");
@@ -126,6 +105,21 @@ public class GPSTracker extends Service implements LocationListener {
         }
 
         return location;
+    }
+
+    //@Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_ACCESS_LOCATION:
+                if (grantResults.length > 0 //If request is cancelled, the result arrays are empty
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //OK, NOW WHAT DO I DO WITH THIS PERMISSION???
+                } else {
+                    //IF PERMISSION IS DENIED, WHAT SHOULD I DO???
+                }
+                break;
+            //case //SHOULD I PUT HERE THE ACCESS NETWORK PERMISSIONS CASE?
+        }
     }
 
     public double getLatitude(){
