@@ -4,4 +4,7 @@
     <string name="saved_places_title">My Saved Spots</string>
     <string name="my_saved_spots">My Saved Spots</string>
     <string name="title_activity_maps">Map</string>
+    <string name="location_permission_denied">This app cannot access your location.</string>
+    <string name="permission_required_toast">Goodbye</string>
+    <string name="permission_rationale_location">This app would like to access your location</string>
 </resources>

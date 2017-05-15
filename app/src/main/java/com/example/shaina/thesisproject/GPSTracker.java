@@ -86,7 +86,7 @@ public class GPSTracker extends Service implements LocationListener {
                             ActivityCompat.requestPermissions((Activity) mContext, new String[]
                                     {Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_LOCATION);
                         }
-                        
+
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                         Log.d("GPS Enabled", "GPS Enabled");
