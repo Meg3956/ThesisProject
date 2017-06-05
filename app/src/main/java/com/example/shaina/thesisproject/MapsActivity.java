@@ -3,6 +3,7 @@ package com.example.shaina.thesisproject;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +18,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         OnMyLocationButtonClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private boolean mPermissionDenied;
 
     private GoogleMap mMap;
 
@@ -76,8 +78,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return false;
     }
 
-    //DO I NEED THIS METHOD IN THIS CLASS AND IN THE GPSTracker CLASS?
- /*   @Override
+    //This callback must be in an Activity, but it could call a separate class, as desired
+  @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
@@ -92,5 +94,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Display the missing permission error dialog when the fragments resume.
             mPermissionDenied = true;
         }
-    } */
+    }
 }

@@ -107,6 +107,8 @@ public class GPSTracker extends Service implements LocationListener {
         return location;
     }
 
+/*
+    // Will not be called automatically; this must be done in the Activity
     //@Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -120,7 +122,7 @@ public class GPSTracker extends Service implements LocationListener {
                 break;
             //case //SHOULD I PUT HERE THE ACCESS NETWORK PERMISSIONS CASE?
         }
-    }
+    }*/
 
     public double getLatitude(){
         if(location != null){

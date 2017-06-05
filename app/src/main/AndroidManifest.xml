@@ -33,7 +33,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps"/>
+
+        <!-- This needed to be added to allow this Activity to be started.
+        Android Studio typically does this for you
+        if you create a new Activity using its New Activity, as opposed to New Class function -->
+        <activity
+            android:name=".SavedSpotsActivity"
+            android:label="@string/saved_places_title"/>
     </application>
 
 </manifest>
